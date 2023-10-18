@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import AssignmentIcon from "@mui/icons-material/Assignment";
 const TaskFormModal = ({ projects, onAddTask, onClose }) => {
   const [label, setLabel] = useState("");
   const [description, setDescription] = useState("");
@@ -9,6 +9,8 @@ const TaskFormModal = ({ projects, onAddTask, onClose }) => {
   const [endingDate, setEndingDate] = useState("");
   const [project, setProject] = useState("");
 
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const task = {
@@ -28,8 +30,6 @@ const TaskFormModal = ({ projects, onAddTask, onClose }) => {
 
   return (
     <div>
-    
-      
       <Modal className="shadow rounded" show={true} onHide={onClose}>
         <Modal.Header closeButton>
           <div className="row">
@@ -51,7 +51,8 @@ const TaskFormModal = ({ projects, onAddTask, onClose }) => {
               </div>
               <div className="d-flex justify-content-start ">
                 <input
-                  className="col rounded border border-secondary "style={{height:"140%"}}
+                  className="col rounded border border-secondary "
+                  style={{ height: "140%" }}
                   type="text"
                   placeholder="write a label..."
                   value={label}
@@ -65,8 +66,9 @@ const TaskFormModal = ({ projects, onAddTask, onClose }) => {
                 <label>Description*</label>
               </div>
               <div className="d-flex justify-content-start">
-                <textarea  className="col rounded border border-secondary"style={{height:"160%"}}
-                
+                <textarea
+                  className="col rounded border border-secondary"
+                  style={{ height: "160%" }}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   required
@@ -79,8 +81,9 @@ const TaskFormModal = ({ projects, onAddTask, onClose }) => {
                 <label>Starting Date*</label>
               </div>
               <div className="d-flex justify-content-start ">
-                <input  className="col rounded border border-secondary"style={{height:"140%"}}
-                
+                <input
+                  className="col rounded border border-secondary"
+                  style={{ height: "140%" }}
                   type="date"
                   value={startingDate}
                   onChange={(e) => setStartingDate(e.target.value)}
@@ -94,8 +97,9 @@ const TaskFormModal = ({ projects, onAddTask, onClose }) => {
                 <label>Ending Date*</label>
               </div>
               <div className="d-flex justify-content-start">
-                <input  className="col rounded border border-secondary "style={{height:"140%"}}
-                 
+                <input
+                  className="col rounded border border-secondary "
+                  style={{ height: "140%" }}
                   type="date"
                   value={endingDate}
                   onChange={(e) => setEndingDate(e.target.value)}
@@ -104,47 +108,48 @@ const TaskFormModal = ({ projects, onAddTask, onClose }) => {
               </div>
             </div>
 
-
             <div className="row mt-2">
               <div className="d-flex justify-content-start mt-2">
                 <label>Project*</label>
               </div>
               <div className="d-flex justify-content-start">
-              <select
-            value={project}
-            onChange={(e) => setProject(e.target.value)}
-            required
-          >
-            <option value="">Select a project</option>
-            {projects.map((project) => (
-              <option key={project.id} value={project.id}>
-                {project.label}
-              </option>
-            ))}
-          </select>
+                <select
+                 
+                >
+                  
+
+                  {projects.map((project) => (
+                     <option>
+                      {project.label}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
-          
-
-      
             <div className="d-flex justify-content-end mt-3">
-              
               <button
                 type="button"
                 onClick={onClose}
                 className="btn btn-sm mx-2"
-                style={{ color: "#800080", borderColor: "#800080",background:"#fff" }}
+                style={{
+                  color: "#800080",
+                  borderColor: "#800080",
+                  background: "#fff",
+                }}
               >
-               Cancel
+                Cancel
               </button>
               <button
                 type="submit"
                 className="btn btn-sm"
-                style={{ color: "#fff", borderColor: "#800080",background:"#800080" }}
+                style={{
+                  color: "#fff",
+                  borderColor: "#800080",
+                  background: "#800080",
+                }}
               >
                 Save
-                
               </button>
             </div>
           </form>

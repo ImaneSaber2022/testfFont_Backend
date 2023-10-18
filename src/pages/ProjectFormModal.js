@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import FlagIcon from "@mui/icons-material/Flag";
 import axios from "axios";
@@ -14,7 +14,22 @@ const ProjectFormModal = ({ onAddProject, onClose,  }) => {
   const [status, setStatus] = useState("");
   const [startingDate, setStartingDate] = useState("");
   const [endingDate, setEndingDate] = useState("");
-
+  const [project, setProject] = useState("");
+  
+  const handelproject = () => {
+    axios
+      .get("http://localhost:4000/projects/")
+      .then((response) => {
+        setProject(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  useEffect(() => {
+    handelproject();
+   
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     const project = {
@@ -26,7 +41,7 @@ const ProjectFormModal = ({ onAddProject, onClose,  }) => {
     };
 
     axios
-      .post("http://localhost:4000/", project)
+      .post("http://localhost:4000/projects/", project)
       .then((response) => {
         console.log(response.data);
         setLabel("");
@@ -36,6 +51,7 @@ const ProjectFormModal = ({ onAddProject, onClose,  }) => {
         setEndingDate("");
 
         navigate("/projects");
+        handelproject();
         // handlChange();
       })
       .catch((error) => {

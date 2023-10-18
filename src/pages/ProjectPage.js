@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate as UseNavigate } from "react-router-dom";
 import { addProject, deleteProject, updateProject } from "../redux/actions";
 import ProjectFormModal from "./ProjectFormModal";
 import IconButton from "@mui/material/IconButton";
@@ -8,10 +9,39 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 
+import axios from "axios";
 import Button from "@mui/material/Button";
 const ProjectsPage = () => {
   const [show, setShow] = useState(false);
+  const [project, setProject] = useState("");
+ 
+  const handelproject =async () => {
+   await axios
+      .get("http://localhost:4000/projects/")
+      .then((response) => {
+        setProject(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  useEffect(() => {
+    handelproject();
+   
+  }, []);
 
+  const handleDeleteClick = async (_id) => {
+    console.log(_id);
+    try {
+      await axios.delete(`http://localhost:4000/projects/${_id}`)
+      .then((response) => {
+        handelproject();
+      })
+     
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleOpenModal = () => {
     setShowModal(true);
   };
@@ -20,10 +50,15 @@ const ProjectsPage = () => {
     setShowModal(false);
   };
 
+  const handleUpdateClick = (_id) => {
+    console.log(_id);
+    
+    navigate(`/projects/${_id}`, ProjectFormModal);
+  };
   const handleSaveModal = (data) => {
     // Effectuer des actions avec les données enregistrées
     console.log(data);
-  };
+  };  const navigate = UseNavigate();
   const [projects, setProjets] = useState([]);
   useEffect(() => {
     fetchProjects();
@@ -115,14 +150,14 @@ const ProjectsPage = () => {
                 <td className="align-middle ">{project.ending_date}</td>
                 <td>
                   <IconButton
-                    onClick={() => handleEditProject(project.id)}
+                    onClick={() => handleUpdateClick(project._id)}
                     aria-label="update"
                     color="secondary"
                   >
                     <EditIcon />
                   </IconButton>
                   <IconButton
-                    onClick={() => handleDeleteProject(project.id)}
+                    onClick={() => handleDeleteClick(project._id)}
                     aria-label="delete"
                     color="secondary"
                   >
